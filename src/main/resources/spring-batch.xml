@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       	xmlns:p="http://www.springframework.org/schema/p" 
+       	xmlns:tx="http://www.springframework.org/schema/tx"
+       	xmlns:context="http://www.springframework.org/schema/context"
+       	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       	xmlns:util="http://www.springframework.org/schema/util"
+       	xmlns:aop="http://www.springframework.org/schema/aop"
+       	xmlns:batch="http://www.springframework.org/schema/batch"
+       	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+			http://www.springframework.org/schema/batch  http://www.springframework.org/schema/batch/spring-batch.xsd">
+		
+    
+      <context:property-placeholder location="classpath:batch.properties" order="1000" />
+            
+    <alias name="transactionManager" alias="transactionBatchManager" />
+    
+    <batch:job-repository id="jobRepository" data-source="dataSource" transaction-manager="transactionBatchManager" isolation-level-for-create="DEFAULT" table-prefix="BATCH_" />
+		
+	<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" p:corePoolSize="${batch.corePool}" p:maxPoolSize="${batch.maxPoolSize}"
+	 p:queueCapacity="${batch.queueCapacity}" />
+	
+    <bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher" p:jobRepository-ref="jobRepository"  p:taskExecutor-ref="taskExecutor"/>
+          
+	<bean id="jobOperator" class="org.springframework.batch.core.launch.support.SimpleJobOperator"
+			p:jobLauncher-ref="jobLauncher" p:jobExplorer-ref="jobExplorer"
+			p:jobRepository-ref="jobRepository" p:jobRegistry-ref="jobRegistry" />
+
+	<bean id="jobExplorer" class="org.springframework.batch.core.explore.support.JobExplorerFactoryBean" p:dataSource-ref="dataSource" />
+
+	<bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry" />
+
+    <bean class="org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor" p:jobRegistry-ref="jobRegistry"/>
+        
+    
+</beans>
