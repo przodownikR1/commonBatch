@@ -1,10 +1,8 @@
 apply plugin: "groovy"
-apply plugin: "scala"
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'project-report'
-apply plugin: 'pmd'
 apply plugin: 'application'
 apply plugin: 'build-dashboard'
 apply plugin: 'codenarc'
@@ -38,13 +36,11 @@ sourceSets {
     main {
         java { srcDir 'src/main/java' }
         groovy { srcDir 'src/main/groovy' }
-        scala { srcDir 'src/main/scala' }
         resources { srcDir 'src/main/resources' }
     }
     test {
         java { srcDir 'src/test/java' }
         groovy { srcDir 'src/test/groovy' }
-        scala { srcDir 'src/test/scala' }
         resources { srcDir 'src/test/resources' }
     }
 }
