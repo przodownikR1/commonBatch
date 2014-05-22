@@ -14,8 +14,8 @@ description = "common batch"
 applicationDefaultJvmArgs = ["-Dfile.encoding=UTF=8"]
 libsDirName = './target'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 [compileJava, compileTestJava]*.options*.compilerArgs = [
     "-Xlint:none",
@@ -23,6 +23,14 @@ targetCompatibility = 1.7
     "-encoding",
     "UTF-8"
 ]
+
+install {
+        repositories.mavenInstaller {
+        pom.version = '0.0.1'
+        pom.artifactId = 'commonBatch'
+        pom.groupId = 'pl.java.scalatech'
+    }
+}
 
 repositories {
     mavenCentral()
@@ -96,7 +104,7 @@ jar {
 
     exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
     manifest {
-        attributes 'Implementation-Title': 'Gradle camel-cxf',
+        attributes 'Implementation-Title': 'Gradle common-batch',
         'Implementation-Version': version,
         'Built-By': System.getProperty('user.name'),
         'Built-Date': new Date(),
