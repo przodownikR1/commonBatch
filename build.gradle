@@ -1,5 +1,4 @@
 apply plugin: "groovy"
-apply plugin: "scala"
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
@@ -16,8 +15,8 @@ description = "common batch"
 applicationDefaultJvmArgs = ["-Dfile.encoding=UTF=8"]
 libsDirName = './target'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 [compileJava, compileTestJava]*.options*.compilerArgs = [
     "-Xlint:none",
@@ -38,13 +37,11 @@ sourceSets {
     main {
         java { srcDir 'src/main/java' }
         groovy { srcDir 'src/main/groovy' }
-        scala { srcDir 'src/main/scala' }
         resources { srcDir 'src/main/resources' }
     }
     test {
         java { srcDir 'src/test/java' }
         groovy { srcDir 'src/test/groovy' }
-        scala { srcDir 'src/test/scala' }
         resources { srcDir 'src/test/resources' }
     }
 }
